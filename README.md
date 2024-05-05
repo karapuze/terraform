@@ -42,3 +42,4 @@ resource "docker_container" "nginx" {
   }
 }
 ```
+![Docker ps](https://github.com/karapuze/terraform/blob/main/Img/Снимок%20экрана%202024-05-05%20в%2011.56.12.png)
