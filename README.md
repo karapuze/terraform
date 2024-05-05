@@ -47,3 +47,18 @@ resource "docker_container" "nginx" {
 6. Ключ -auto-approve опасен тем что не запрашивает подтверждения перед применением и не показывает результат terraform plan, соответсвенно автоматически примененные изменения могут сломать всю инфру. Данный ключ можно использовать например в CI/CD для автоматизации, возможно также использовать для быстрого и автоматизированного восстановления инфры.
 
 ![**Docker ps**](https://github.com/karapuze/terraform/blob/main/Img/Снимок%20экрана%202024-05-05%20в%2012.48.20.png)
+
+7. 
+```
+{
+  "version": 4,
+  "terraform_version": "1.5.7",
+  "serial": 11,
+  "lineage": "0fdd4726-7754-42d9-282a-617ccc3841e8",
+  "outputs": {},
+  "resources": [],
+  "check_results": null
+}
+```
+8. Образ не был удален из-за значения "keep_locally = true"
+keep_locally (Boolean) If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation.
