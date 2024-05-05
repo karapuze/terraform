@@ -21,3 +21,24 @@
 8. Объясните, почему при этом не был удалён docker-образ nginx:latest. Ответ ОБЯЗАТЕЛЬНО НАЙДИТЕ В ПРЕДОСТАВЛЕННОМ КОДЕ, а затем ОБЯЗАТЕЛЬНО ПОДКРЕПИТЕ строчкой из документации terraform провайдера docker. (ищите в классификаторе resource docker_image )
 
 ### Ответ 1.
+
+2. personal.auto.tfvars
+3. "result": "NX7Hi9BQZa3Zm76F"
+4. Первая ошибка допущена в блоке с описанием ресурса "docker_image", отсутсвует name. Вторая ошибка в блоке "docker_container", неверное значение в name, должно начинаться либо с букв либо с _, а начинается с цифры. Также была ошибка в "name  = "example_${random_password.random_string_FAKE.resulT}"
+5. Исправленный фрагмент:
+```
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = true
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.image_id
+  name  = "example_${random_password.random_string.result}"
+
+  ports {
+    internal = 80
+    external = 9090
+  }
+}
+```
