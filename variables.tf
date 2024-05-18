@@ -38,3 +38,38 @@ variable "vms_ssh_root_key" {
   type        = string
   description = "ssh-keygen -t ed25519"
 }
+
+
+###variable_for_yandex_compute_image
+variable "family" {
+  type        = string
+  default     = "ubuntu-2004-lts"
+  description = "type OS"
+}
+
+###variables_for_yandex_compute_instance
+
+variable "vm_web_name" {
+  type        = string
+  default     = "netology-develop-platform-web"
+  description = "Name VM"
+}
+
+variable "cores" {
+  type        = number
+  default     = 2
+  description = "vCPU cores"
+}
+
+variable "memory" {
+  type        = number
+  default     = 1
+  description = "RAM size"
+}
+
+variable "core_fraction" {
+  type        = number
+  default     = 5
+  description = "% fraction vCPU"
+}
+
