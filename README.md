@@ -55,6 +55,24 @@ core_fraction=5 означает гарантированная доля cpu, и
 
 ## Ответ 4
 
+Полный вывод terraform output
+```
+instance_details = {
+  "db" = {
+    "external_ip" = "51.250.17.208"
+    "fqdn" = "epdcp60dl5ehki4sgaff.auto.internal"
+    "instance_name" = "netology-develop-platform-db"
+  }
+  "platform" = {
+    "external_ip" = "84.201.133.178"
+    "fqdn" = "fhm7cbdlb6jpus8t6p0h.auto.internal"
+    "instance_name" = "netology-develop-platform-web"
+    "status" = "running"
+  }
+}
+```
+
+
 # Задание 5
 
 1. В файле locals.tf опишите в одном local-блоке имя каждой ВМ, используйте интерполяцию ${..} с НЕСКОЛЬКИМИ переменными по примеру из лекции.
