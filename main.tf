@@ -1,38 +1,41 @@
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.1"
+resource "yandex_vpc_network" "develop" {
+  name = var.vpc_name
+}
+resource "yandex_vpc_subnet" "develop" {
+  name           = var.vpc_name
+  zone           = var.default_zone
+  network_id     = yandex_vpc_network.develop.id
+  v4_cidr_blocks = var.default_cidr
+}
+
+
+data "yandex_compute_image" "ubuntu" {
+  family = "ubuntu-2004-lts"
+}
+resource "yandex_compute_instance" "platform" {
+  name        = "netology-develop-platform-web"
+  platform_id = "standart-v4"
+  resources {
+    cores         = 1
+    memory        = 1
+    core_fraction = 5
+  }
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
     }
   }
-  required_version = ">=0.13" /*Многострочный комментарий.
- Требуемая версия terraform */
-}
-provider "docker" {}
-
-#однострочный комментарий
-
-resource "random_password" "random_string" {
-  length      = 16
-  special     = false
-  min_upper   = 1
-  min_lower   = 1
-  min_numeric = 1
-}
-
-
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = true
-}
-
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
-  name  = "hello_world"
-
-  ports {
-    internal = 80
-    external = 9090
+  scheduling_policy {
+    preemptible = true
   }
-}
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop.id
+    nat       = true
+  }
 
+  metadata = {
+    serial-port-enable = 1
+    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+  }
+
+}
