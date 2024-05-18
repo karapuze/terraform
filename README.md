@@ -81,6 +81,33 @@ instance_details = {
 
 ## Ответ 5
 
+Сделал в locals вот так:
+```
+locals {
+  vm_names = {
+    web = "${var.vm_web_name}-${var.default_zone}"
+    db  = "${var.vm_db_name}-${var.vm_db_zone}"
+  }
+}
+```
+То есть VM именуется с использованием переменной с именем и названием зоны, после применения кода, outpus выглядит так:
+```
+Outputs:
+
+instance_details = {
+  "db" = {
+    "external_ip" = "51.250.17.208"
+    "fqdn" = "epdcp60dl5ehki4sgaff.auto.internal"
+    "instance_name" = "netology-develop-platform-db-ru-central1-b"
+  }
+  "platform" = {
+    "external_ip" = "84.201.133.178"
+    "fqdn" = "fhm7cbdlb6jpus8t6p0h.auto.internal"
+    "instance_name" = "netology-develop-platform-web-ru-central1-a"
+  }
+}
+```
+
 # Задание 6
 
 Вместо использования трёх переменных ".._cores",".._memory",".._core_fraction" в блоке resources {...}, объедините их в единую map-переменную vms_resources и внутри неё конфиги обеих ВМ в виде вложенного map.
