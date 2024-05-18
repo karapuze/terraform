@@ -110,33 +110,50 @@ instance_details = {
 
 # Задание 6
 
-Вместо использования трёх переменных ".._cores",".._memory",".._core_fraction" в блоке resources {...}, объедините их в единую map-переменную vms_resources и внутри неё конфиги обеих ВМ в виде вложенного map.
+1. Вместо использования трёх переменных ".._cores",".._memory",".._core_fraction" в блоке resources {...}, объедините их в единую map-переменную vms_resources и внутри неё конфиги обеих ВМ в виде вложенного map.
 
-пример из terraform.tfvars:
-vms_resources = {
-  web={
-    cores=
-    memory=
-    core_fraction=
-    ...
-  },
-  db= {
-    cores=
-    memory=
-    core_fraction=
-    ...
-  }
-}
-Создайте и используйте отдельную map переменную для блока metadata, она должна быть общая для всех ваших ВМ.
+2. Создайте и используйте отдельную map переменную для блока metadata, она должна быть общая для всех ваших ВМ.
 
-пример из terraform.tfvars:
-metadata = {
-  serial-port-enable = 1
-  ssh-keys           = "ubuntu:ssh-ed25519 AAAAC..."
-}
-Найдите и закоментируйте все, более не используемые переменные проекта.
+3. Найдите и закоментируйте все, более не используемые переменные проекта.
 
-Проверьте terraform plan. Изменений быть не должно.
+4. Проверьте terraform plan. Изменений быть не должно.
 
 ## Ответ 6
 
+```
+variable "vms_resources" {
+  type = map(object({
+    name          = string
+    cores         = number
+    memory        = number
+    core_fraction = number
+    zone          = string
+  }))
+  default = {
+    web = {
+      name          = "netology-develop-platform-web"
+      cores         = 2
+      memory        = 1
+      core_fraction = 5
+      zone          = "ru-central1-a"
+    }
+    db = {
+      name          = "netology-develop-platform-db"
+      cores         = 2
+      memory        = 2
+      core_fraction = 20
+      zone          = "ru-central1-b"
+    }
+  }
+}
+
+variable "vms_metadata" {
+  type = map(string)
+  default = {
+    serial-port-enable = "1"
+    ssh_keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwZpHY4prQOwRvVoKdw8Hj00O2MorM4+krJXInepj9i karapuze@yandex.ru"
+  }
+}
+```
+
+Долго пытался убрать ssh ключ, но не придумал как, в целом можно и так, ведь ключ публичный, значит можно хранить его в открытом виде
