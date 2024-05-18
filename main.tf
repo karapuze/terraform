@@ -5,14 +5,14 @@ resource "yandex_vpc_subnet" "develop" {
   name           = var.vpc_name
   zone           = var.default_zone
   network_id     = yandex_vpc_network.develop.id
-  v4_cidr_blocks = var.default_cidr
+  v4_cidr_blocks = [var.default_cidr[0]]
 }
 
 resource "yandex_vpc_subnet" "develop-b" {
   name           = var.vpc_name_b
   zone           = var.vm_db_zone
   network_id     = yandex_vpc_network.develop.id
-  v4_cidr_blocks = var.default_cidr_b
+  v4_cidr_blocks = [var.default_cidr[1]]
 }
 
 
@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "platform" {
 resource "yandex_compute_instance" "db" {
   name        = var.vm_db_name
   platform_id = "standard-v1"
-  zone = var.vm_db_zone
+  zone        = var.vm_db_zone
   resources {
     cores         = var.vm_db_cores
     memory        = var.vm_db_memory

@@ -44,7 +44,7 @@ core_fraction=5 означает гарантированная доля cpu, и
 ## Ответ 3
 
 1. Новая VM создана успешно
-
+![alt text](https://github.com/karapuze/terraform/blob/main/Img/Снимок%20экрана%202024-05-18%20в%2016.04.33.png)
 
 
 # Задание 4
