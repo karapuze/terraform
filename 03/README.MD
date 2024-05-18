@@ -10,6 +10,7 @@
 
 ### Ответ 1
 
+![alt text](https://github.com/karapuze/terraform/blob/main/03/img/Снимок%20экрана%202024-05-18%20в%2020.12.14.png)
 
 Задание 2
 
