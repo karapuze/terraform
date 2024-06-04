@@ -11,3 +11,4 @@ resource "yandex_vpc_subnet" "develop" {
 data "yandex_compute_image" "ubuntu" {
   family = var.family
 }
+

@@ -1,0 +1,20 @@
+%{if length(webservers) > 0}
+[webservers]
+%{for server in webservers}
+${server.name} ansible_host=${server.network_interface.0.nat_ip_address} fqdn=${server.fqdn}
+%{endfor}
+%{endif}
+
+%{if length(databases) > 0}
+[databases]
+%{for server in databases}
+${server.name} ansible_host=${server.network_interface.0.nat_ip_address} fqdn=${server.fqdn}
+%{endfor}
+%{endif}
+
+%{if length(storage) > 0}
+[storage]
+%{for server in storage}
+${server.name} ansible_host=${server.network_interface.0.nat_ip_address} fqdn=${server.fqdn}
+%{endfor}
+%{endif}
