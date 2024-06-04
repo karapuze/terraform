@@ -1,6 +1,4 @@
-data "yandex_compute_image" "ubuntu1" {
-  family = var.family
-}
+
 resource "yandex_compute_instance" "db" {
   for_each = { for vm in var.each_vm : vm.vm_name => vm }
 

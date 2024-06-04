@@ -1,7 +1,3 @@
-data "yandex_compute_image" "ubuntu" {
-  family = var.family
-}
-
 resource "yandex_compute_instance" "web" {
   count = 2
   name  = "web-${count.index + 1}"
