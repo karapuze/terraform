@@ -1,20 +1,21 @@
-data "yandex_compute_image" "ubuntu" {
+data "yandex_compute_image" "ubuntu1" {
   family = var.family
 }
+resource "yandex_compute_instance" "db" {
+  for_each = { for vm in var.each_vm : vm.vm_name => vm }
 
-resource "yandex_compute_instance" "web" {
-  count = 2
-  name  = "web-${count.index + 1}"
+  name = each.value.vm_name
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = each.value.cpu
+    memory        = each.value.ram
     core_fraction = 5
   }
 
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.ubuntu.image_id
+      size     = each.value.disk_volume
     }
   }
 
@@ -30,8 +31,4 @@ resource "yandex_compute_instance" "web" {
   metadata = {
     ssh-keys = "ubuntu:${local.ssh_key}"
   }
-
-  depends_on = [
-    yandex_compute_instance.db
-  ]
 }
